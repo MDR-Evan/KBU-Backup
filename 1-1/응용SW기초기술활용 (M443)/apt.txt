@@ -1,0 +1,39 @@
+apt
+-> dpkg 명령의 패키지 의존성 문제를 완전하게 해결함.
+
+apt - cache
+-패키지 정보 보기
+apt - show 패키지이름
+의존성 확인
+apt - depends 패키지이름
+역의존성 확인
+apt - rdepends 패키지이름
+
+우분투 패키지 저장소
+main : 우분투에서 공식적으로 지원하는 무료 SW
+universe : 우분투에서 지원하지 않는 무료 SW
+restricted : 우분투에서 공식적으로 지원하는 유료 SW
+multiverse : 우분투에서 지원하지 않는 유료 SW
+
+저장소가 기록된 파일
+/etc/apt/sources.list 파일
+
+파일 압축
+-확장명 : zx, bz2, gz, zip, Z 등
+-xz나 bz2 압축률이 더 좋음
+-관련 명령
+>xz : 확장명 xz로 압축을 하거나 풀어준다
+예) xz 파일명
+     xz - d 파일명.xz
+
+파일 묶기
+리눅스(유닉스)에서는 '파일 압축'과 '파일 묶기'는 원칙적으로 별개의 프로그램으로 수행
+
+-명령
+>동작 : c 묶기, x 풀기, t 경로확인
+>옵션 : f 파일, v 과정보이기, j tar+ xz, z tar + gzip, j Tar + bzip2
+
+파일 위치 검색
+-find [경로] [옵션] [조건] [action] : 기본 파일 찾기
+>옵션 -name -user -newer -perm -size
+>동작 -print -exec

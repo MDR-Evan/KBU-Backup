@@ -1,0 +1,109 @@
+B -> A로 Reply
+
+1) Computer B
+- ICMP Reply Message 작성
+- IPv4 Message 작성 :
+-> Source IP(B) : 192.168.20.20
+-> Destination IP(A) : 192.168.10.10
+-Ethernet Message 작성
+-> Source MAC 주소 : bb:bb:bb:bb:bb:bb
+-> Destination MAC 주소 : dd:dd:dd:dd:dd:dd
+-전송
+
+2) Gate way D
+- Destination Mac주소의 gateway는 MAC주소가 일치하여 수신
+- 상위 Protocol인 IPv4의 IP주소를 확인 일치여부 확인
+- 불일치하여 Routing Table 정보를 통해서 다음 Network의
+-> Source MAC주소(44:44:44:44:44:44)와
+-> Destination MAC주소(33:33:33:33:33:33)를 확보
+-Ethernet Message 작성
+-> Source MAC 주소 : 44:44:44:44:44:44
+-> Destination MAC 주소 : 33:33:33:33:33:33
+-전송
+
+3) Gate way C
+- Destination Mac주소의 gateway는 MAC주소가 일치하여 수신
+- 상위 Protocol인 IPv4의 IP주소를 확인 일치여부 확인
+- 불일치하여 Routing Table 정보를 통해서 다음 Network의
+-> Source MAC주소(22:22:22:22:22:22)와
+-> Destination MAC주소(11:11:11:11:11:11)를 확보
+-Ethernet Message 작성
+-> Source MAC 주소 : 22:22:22:22:22:22
+-> Destination MAC 주소 : 11:11:11:11:11:11
+-전송
+
+4) Computer A
+- Destination Mac주소의 gateway는 MAC주소가 일치하여 수신
+- 상위 Protocol인 IPv4의 IP주소를 확인 일치여부 확인
+- 일치 
+
+
+- 불일치하여 Routing Table 정보를 통해서 다음 Network의
+-> Source MAC주소(cc:cc:cc:cc:cc:cc)와
+-> Destination MAC주소(aa:aa:aa:aa:aa:aa)를 확보
+-Ethernet Message 작성
+-> Source MAC 주소 : cc:cc:cc:cc:cc:cc
+-> Destination MAC 주소 : aa:aa:aa:aa:aa:aa
+-전송
+--------------------------------------------------------------------
+B To A Reply 과정
+
+ICMP에서 리플라이 데이터를 작성후 
+IPv4 패킷으로 내려간 다음 소스와 목적지 IP주소를 가지고
+Eth 패킷을 작성하고 MAC주소를 통해 게이트웨이와 최종 목적지를 향해 흘러감
+----------------------------------------------------------------------
+1. A로부터 받은 리퀘스트 정보를 받고 ICMP에서 데이터를 작성한다.
+- ICMP Reply Message 작성
+
+2. ICMP 데이터를 IPv4 패킷으로 소스와 목적지 IP주소를 작성한다.
+- Source IP(B) : 192.168.20.20
+- Destination IP(A) : 192.168.10.10
+
+3. IPv4 패킷을 전송하기 위해 Eth패킷을 작성하고 MAC주소를 생성한다.
+- Source MAC IP(B) : bb:bb:bb:bb:bb:bb
+- Destination MAC IP(D) : dd:dd:dd:dd:dd:dd
+
+4. B -> D
+4-1. (Eth 패킷)
+- Source IP(B) : bb:bb:bb:bb:bb:bb
+- Destination IP(D) : dd:dd:dd:dd:dd:dd
+-> Eth 패킷 주소가 맞으므로 IPv4 패킷을 확인한다.
+4-2. (IPv4 패킷)
+- 메세지 정보
+- Source IP(B) : 192.168.20.20
+- Destination IP(A) : 192.168.10.10
+-> IPv4패킷 IP주소가 다르므로 IP주소를 체크 후 게이트웨이에서 라우팅테이블 정보를 가지고 Eth패킷 MAC주소를 작성한 뒤 흘린다.
+
+5. 4 -> 3
+5-1. (Eth 패킷)
+- Source IP(4) : 44:44:44:44:44:44
+- Destination IP(3) : 33:33:33:33:33:33
+-> Eth 패킷 주소가 맞으므로 IPv4 패킷을 확인한다.
+5-2. (IPv4 패킷)
+- 메세지 정보
+- Source IP(B) : 192.168.20.20
+- Destination IP(A) : 192.168.10.10
+-> IPv4패킷 IP주소가 다르므로 IP주소를 체크 후 게이트웨이에서 라우팅테이블 정보를 가지고 Eth패킷 MAC주소를 작성한 뒤 흘린다.
+
+6. 2 -> 1
+6-1. (Eth 패킷)
+- Source IP(2) : 22:22:22:22:22:22
+- Destination IP(1) : 11:11:11:11:11:11
+-> Eth 패킷 주소가 맞으므로 IPv4 패킷을 확인한다.
+6-2. (IPv4 패킷)
+- 메세지 정보
+- Source IP(B) : 192.168.20.20
+- Destination IP(A) : 192.168.10.10
+-> IPv4패킷 IP주소가 다르므로 IP주소를 체크 후 게이트웨이에서 라우팅테이블 정보를 가지고 Eth패킷 MAC주소를 작성한 뒤 흘린다.
+
+7. C -> A
+7-1. (Eth 패킷)
+- Source IP(C) : cc:cc:cc:cc:cc:cc
+- Destination IP(A) : aa:aa:aa:aa:aa;aa
+-> Eth 패킷 주소가 맞으므로 IPv4 패킷을 확인한다.
+7-2. (IPv4 패킷)
+- 메세지 정보
+- Source IP(B) : 192.168.20.20
+- Destination IP(A) : 192.168.10.10
+-> IPv4패킷 IP주소가 맞으므로 ICMP 데이터를 확인한다.
+=> ICMP Data : A -> B ReQuest에 대한 Reply

@@ -1,0 +1,12 @@
+관리자 모드
+sudo  su - root
+비밀번호 : ubuntu
+
+root관리자 비밀번호 변경
+passwd
+비밀번호 : password
+재입력 : password
+
+cd
+ls -l
+
